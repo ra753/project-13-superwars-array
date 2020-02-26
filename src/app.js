@@ -23,12 +23,27 @@ const PLAYERS = [
 
 // initialize players with image and strength
 const initPlayers = (players) => {
-    let detailedPlayers = '';
+    let newPlayer = '';
 
-    // Instead of forloop use Map method
+    // Instead of for-loop use Map method
     // Code here
+    newPlayer = players.map(function (name, i) {
+        var jsonObj = {
+            name: name,
+            strength: getRandomStrength(),
+            type: "",
+            image: "../images/super" + "-" + (i) + ".png" 
+        }
+        if (i%2 === 0) {
+            jsonObj.type = "hero";
+        } else {
+            jsonObj.type = "villan";
+        }
 
-    return detailedPlayers;
+
+        return jsonObj;
+    });
+    return newPlayer;
 }
 
 // getting random strength
@@ -38,13 +53,18 @@ const getRandomStrength = () => {
 
 // Build player template
 const buildPlayers = (players, type) => {
-    let fragment = '';
+    let template = players.filter(player => player.type == type).map(player =>
+        `<div class="player">
+        <img src="${player.image}" alt="">
+        <div class="name">${player.name}</div>
+        <div class="strength">${player.strength}</div>
+        </div>`).join();
 
     // Instead of using for loop
     // Use chaining of Array methods - filter, map and join
     // Type your code here
 
-    return fragment;
+    return template;
 }
 
 // Display players in HTML
